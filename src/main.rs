@@ -6,13 +6,14 @@ mod solutions;
 
 fn main() {
     let input = get_input("01", true);
-    let result = solutions::day01::solution_a(&input);
-    //let result = solutions::day01::solution_b(&input);
+    //let result = solutions::day01::solution_a(&input);
+    let result = solutions::day01::solution_b(&input);
 
     println!("{}", result);
 }
 
-fn get_input(day: &str, test: bool) -> String {
+fn get_input(day: &str, test: bool) -> String
+{
     let filename = if test {
         format!("./inputs/{}_test.txt", day)
     } else {
