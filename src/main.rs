@@ -5,9 +5,9 @@ use std::io::prelude::*;
 mod solutions;
 
 fn main() {
-    let input = get_input("01", false);
-    //let result = solutions::day01::solution_a(&input);
-    let result = solutions::day01::solution_b(&input);
+    let input = get_input("02", false);
+    let result = solutions::day02::solution_a(&input);
+    let result = solutions::day02::solution_b(&input);
 
     println!("{}", result);
 }
