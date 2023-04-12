@@ -1,4 +1,3 @@
-use core::panic;
 
 enum Direction
 {
