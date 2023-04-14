@@ -1,4 +1,3 @@
-
 enum Direction
 {
     Forward,
