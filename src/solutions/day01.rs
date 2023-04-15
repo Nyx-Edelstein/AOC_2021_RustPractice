@@ -1,15 +1,15 @@
-fn parse(input: &String) -> Vec<u32>
+fn parse(input: &str) -> Vec<u32>
 {
     input.lines().map(|s| s.to_string().parse::<u32>().unwrap()).collect()
 }
 
-pub fn solution_a(input: &String) -> String
+pub fn solution_a(input: &str) -> String
 {
     let depths = parse(input);
     get_depth_increases(depths)
 }
 
-pub fn solution_b(input: &String) -> String
+pub fn solution_b(input: &str) -> String
 {
     let depths = parse(input);
     let windows = depths.iter()
@@ -27,11 +27,11 @@ fn get_depth_increases(depths: Vec<u32>) -> String
     {
         if depth > prev_depth
         {
-            num_depth_increases = num_depth_increases + 1;
+            num_depth_increases += num_depth_increases;
         }
         prev_depth = depth;
     };
-    return (num_depth_increases-1).to_string();
+    (num_depth_increases-1).to_string()
 }
 
 

@@ -1,22 +1,22 @@
-pub fn parse(input: &String) -> Vec<Vec<u32>>
+pub fn parse(input: &str) -> Vec<Vec<u32>>
 {
     let bin_numbers = input.lines()
-        .map(|s| parse_line(s))
+        .map(parse_line)
         .collect();
 
-    return bin_numbers;
+    bin_numbers
 }
 
 pub fn parse_line(line: &str) -> Vec<u32>
 {
     let bits = line.chars()
-        .map(|bit| bit.to_digit(2).expect(format!("could not parse {}", bit).as_str()))
+        .map(|bit| bit.to_digit(2).unwrap_or_else(|| panic!("could not parse {}", bit)))
         .collect();
 
-    return bits;
+    bits
 }
 
-pub fn solution_a(input: &String) -> String
+pub fn solution_a(input: &str) -> String
 {
     let bin_numbers = parse(input);
     let bin_width = bin_numbers[0].len();
@@ -25,10 +25,11 @@ pub fn solution_a(input: &String) -> String
     let gamma_epsilon = get_gamma_epsilon(bitcount, cutoff);    
     let gamma = to_number(&gamma_epsilon.0);
     let epsilon = to_number(&gamma_epsilon.1); 
-    return (gamma * epsilon).to_string();
+    
+    (gamma * epsilon).to_string()
 }
 
-fn get_bitcount(bin_numbers: &Vec<Vec<u32>>, bin_width: usize) -> Vec<u32>
+fn get_bitcount(bin_numbers: &[Vec<u32>], bin_width: usize) -> Vec<u32>
 {
     let mut bitcount: Vec<u32> = vec![0; bin_width];
     for bin_number in bin_numbers.iter()
@@ -38,7 +39,8 @@ fn get_bitcount(bin_numbers: &Vec<Vec<u32>>, bin_width: usize) -> Vec<u32>
             bitcount[position] += *bit;
         }
     }
-    return bitcount;
+
+    bitcount
 }
 
 fn get_gamma_epsilon(bitcount: Vec<u32>, cutoff: u32) -> (Vec<u32>, Vec<u32>)
@@ -59,12 +61,13 @@ fn get_gamma_epsilon(bitcount: Vec<u32>, cutoff: u32) -> (Vec<u32>, Vec<u32>)
             gamma_epsilon.1[pos] = 0;
         }
     }
-    return gamma_epsilon;
+    
+    gamma_epsilon
 }
 
-fn to_number(num_bin: &Vec<u32>) -> u32
+fn to_number(num_bin: &[u32]) -> u32
 {
-    return num_bin.into_iter().fold(0, |acc, digit| (acc << 1) + digit);
+    num_bin.iter().fold(0, |acc, digit| (acc << 1) + digit)
 }
 
 
@@ -75,7 +78,7 @@ enum SortType
     LeastCommon
 }
 
-pub fn solution_b(input: &String) -> String
+pub fn solution_b(input: &str) -> String
 {
     let oxygen_numbers = parse(input);
     let scrubber_numbers = oxygen_numbers.clone();
@@ -83,7 +86,7 @@ pub fn solution_b(input: &String) -> String
     let oxygen_rating = get_rating(oxygen_numbers, SortType::MostCommon);
     let scrubber_rating = get_rating(scrubber_numbers, SortType::LeastCommon);
 
-    return (oxygen_rating * scrubber_rating).to_string();
+    (oxygen_rating * scrubber_rating).to_string()
 }
 
 fn get_rating(mut numbers: Vec<Vec<u32>>, sort: SortType) -> u32
@@ -93,19 +96,16 @@ fn get_rating(mut numbers: Vec<Vec<u32>>, sort: SortType) -> u32
     {
         let most_common_bit = get_most_common_bit(&numbers, &bitplace);
 
-        numbers = numbers.iter()
-            .filter(|(&n)| match sort
-            {
-                SortType::MostCommon => (*n)[bitplace] == most_common_bit,
-                SortType::LeastCommon => (*n)[bitplace] != most_common_bit
-            }).map(|x| x.clone())
-            .collect();
+        numbers.retain(|n| match sort
+        {
+            SortType::MostCommon => (*n)[bitplace] == most_common_bit,
+            SortType::LeastCommon => (*n)[bitplace] != most_common_bit
+        });
 
         bitplace += 1;
     }
 
-    let rating = to_number(&numbers[0]);
-    return rating;
+    to_number(&numbers[0])
 }
 
 fn get_most_common_bit(numbers: &Vec<Vec<u32>>, bitplace: &usize) -> u32
@@ -124,9 +124,10 @@ fn get_most_common_bit(numbers: &Vec<Vec<u32>>, bitplace: &usize) -> u32
         true => number_count/2,
         false => number_count/2 + 1
     };
-    return match bitcount >= half
+    
+    match bitcount >= half
     {
         true => 1,
         false => 0
-    };
+    }
 }

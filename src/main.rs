@@ -20,8 +20,9 @@ fn get_input(day: &str, test: bool) -> String
         format!("./inputs/{}.txt", day)
     };
     let path = Path::new(&filename);
-    let mut file = File::open(path).expect(format!("cannot find file at {}", filename).as_str());
+    let mut file = File::open(path).unwrap_or_else(|_| panic!("cannot find file at {}", filename));
     let mut input = String::new();
-    file.read_to_string(&mut input).expect(format!("cannot read file at {}", filename).as_str());
-    return input;
+    file.read_to_string(&mut input).unwrap_or_else(|_| panic!("cannot read file at {}", filename));
+    
+    input
 }

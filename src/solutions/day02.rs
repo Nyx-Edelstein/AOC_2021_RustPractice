@@ -7,20 +7,20 @@ enum Direction
 
 struct Command
 {
-    Direction: Direction,
-    Distance: u32,
+    direction: Direction,
+    distance: u32,
 }
 
-fn Parse(input: &String) -> Vec<Command>
+fn parse(input: &str) -> Vec<Command>
 {
     let commands: Vec<Command> = input.lines()
-        .map(|s| ParseLine(s))
+        .map(parse_line)
         .collect();
 
-    return commands;
+    commands
 }
 
-fn ParseLine(input: &str) -> Command
+fn parse_line(input: &str) -> Command
 {
     let tokens: Vec<_> = input.split_whitespace().collect();
 
@@ -40,52 +40,52 @@ fn ParseLine(input: &str) -> Command
 
     let dist = b.parse::<u32>().unwrap();
 
-    return Command
+    Command
     {
-        Direction: dir,
-        Distance: dist 
+        direction: dir,
+        distance: dist 
     }
 }
 
-pub fn solution_a(input: &String) -> String
+pub fn solution_a(input: &str) -> String
 {
-    let commands = Parse(input);
+    let commands = parse(input);
     let mut depth = 0;
     let mut distance = 0;
     for command in commands.iter()
     {
-        match command.Direction
+        match command.direction
         {
-            Direction::Forward => distance += command.Distance,
-            Direction::Down => depth += command.Distance,
-            Direction::Up => depth -= command.Distance,
+            Direction::Forward => distance += command.distance,
+            Direction::Down => depth += command.distance,
+            Direction::Up => depth -= command.distance,
         }
     }
 
     let result = depth * distance;
-    return  result.to_string();
+    result.to_string()
 }
 
-pub fn solution_b(input: &String) -> String
+pub fn solution_b(input: &str) -> String
 {
-    let commands = Parse(input);
+    let commands = parse(input);
     let mut depth = 0;
     let mut distance = 0;
     let mut aim = 0;
     for command in commands.iter()
     {
-        match command.Direction
+        match command.direction
         {
-            Direction::Down => aim += command.Distance,
-            Direction::Up => aim -= command.Distance,
+            Direction::Down => aim += command.distance,
+            Direction::Up => aim -= command.distance,
             Direction::Forward =>
             {
-                distance += command.Distance;
-                depth += command.Distance * aim;
+                distance += command.distance;
+                depth += command.distance * aim;
             },
         }
     }
 
     let result = depth * distance;
-    return  result.to_string();
+    result.to_string()
 }
