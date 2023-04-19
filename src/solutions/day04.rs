@@ -20,24 +20,6 @@ impl BingoBoard
         Self {board: b, numbers_called: 0, last_called: 0}
     }
 
-    fn stringify(&self) -> String
-    {
-        let s : Vec<_> = self.board.iter()
-            .map(|(n, marked)| match marked
-            {
-                true => String::from("XX"),
-                false => format!("{:02}", n)
-            }).collect();
-
-        let row1 = s[0..5].join(" ");
-        let row2 = s[5..10].join(" ");
-        let row3 = s[10..15].join(" ");
-        let row4 = s[15..20].join(" ");
-        let row5 = s[20..25].join(" ");
-
-        [row1, row2, row3, row4, row5].join("\r\n")
-    }
-
     fn call_number(mut self, n: &u32) -> Self
     {
         if self.has_bingo()
