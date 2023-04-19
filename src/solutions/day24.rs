@@ -1,9 +1,9 @@
-pub fn solution_a(input: &String) -> String
+pub fn solution_a(input: &str) -> String
 {
-    return String::from("");
+    String::from("")
 }
 
-pub fn solution_b(input: &String) -> String
+pub fn solution_b(input: &str) -> String
 {
-    return String::from("");
+    String::from("")
 }

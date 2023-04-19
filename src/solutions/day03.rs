@@ -117,7 +117,7 @@ fn get_most_common_bit(numbers: &Vec<Vec<u32>>, bitplace: &usize) -> u32
         bitcount += bit;
     }
 
-    let number_count : u32 = (*numbers).len().try_into().unwrap();
+    let number_count : u32 = numbers.len().try_into().unwrap();
     let even = number_count % 2 == 0;
     let half = match even
     {
