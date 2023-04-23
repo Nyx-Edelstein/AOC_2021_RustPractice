@@ -19,9 +19,9 @@ fn solve(day: &str, solution_func: fn(&str) -> String, test : bool)
 fn get_input(day: &str, test: bool) -> String
 {
     let filename = if test {
-        format!("./inputs/{}_test.txt", day)
+        format!("./input_test/{}.txt", day)
     } else {
-        format!("./inputs/{}.txt", day)
+        format!("./input/{}.txt", day)
     };
     let path = Path::new(&filename);
     let mut file = File::open(path).unwrap_or_else(|_| panic!("cannot find file at {}", filename));
