@@ -18,11 +18,12 @@ fn solve(day: &str, solution_func: fn(&str) -> String, test : bool)
 
 fn get_input(day: &str, test: bool) -> String
 {
-    let filename = if test {
-        format!("./input_test/{}.txt", day)
-    } else {
-        format!("./input/{}.txt", day)
+    let filename = match test
+    {
+        true => format!("./input_test/{}.txt", day),
+        false => format!("./input/{}.txt", day)
     };
+    
     let path = Path::new(&filename);
     let mut file = File::open(path).unwrap_or_else(|_| panic!("cannot find file at {}", filename));
     let mut input = String::new();
