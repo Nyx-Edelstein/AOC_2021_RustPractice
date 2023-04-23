@@ -4,11 +4,15 @@ use std::io::prelude::*;
 
 mod solutions;
 
-fn main() {
-    let input = get_input("04", false);
-    //let result = solutions::day04::solution_a(&input);
-    let result = solutions::day04::solution_b(&input);
+fn main()
+{
+    solve("05", solutions::day05::solution_b, false);
+}
 
+fn solve(day: &str, solution_func: fn(&str) -> String, test : bool)
+{
+    let input = get_input(day, test);
+    let result = solution_func(input.as_str());
     println!("{}", result);
 }
 
