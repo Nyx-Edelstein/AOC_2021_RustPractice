@@ -6,9 +6,7 @@ fn parse(input : &str) -> Vec<i32>
         .map(|s| s.parse::<i32>())
         .filter_map(|n| n.ok())
         .collect();
-
     positions.sort();
-
     positions
 }
 
