@@ -1,5 +1,5 @@
 [package]
-name = "AOC_2021_RustPractice"
+name = "aoc_2021_rust_practice"
 version = "0.1.0"
 edition = "2021"
 
