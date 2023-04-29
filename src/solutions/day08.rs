@@ -54,9 +54,9 @@ impl Display
             .filter(|&s| !s.is_empty())
             .collect();
 
-        let mut mixed_clusters = parse(parts[0]);
+        let mut mixed_clusters = Self::parse(parts[0]);
         mixed_clusters.sort_by_key(|s| std::cmp::Reverse(s.len()));
-        let display_clusters = parse(parts[1]);
+        let display_clusters = Self::parse(parts[1]);
 
         let all_segments: HashSet<char> = "abcdefg".chars().collect();
         let mut segment_maps = HashMap::new();
@@ -69,6 +69,16 @@ impl Display
         segment_maps.insert('g', all_segments);
 
         Display { mixed_clusters, display_clusters, segment_maps }
+    }
+
+    fn parse(part: &str) -> Vec<String>
+    {
+        part.split(' ').map(|s|
+        {
+            let mut v : Vec<_> = s.chars().collect();
+            v.sort();
+            v.into_iter().collect::<String>()
+        }).collect()
     }
 
     fn solve(self) -> u32
@@ -110,14 +120,13 @@ impl Display
             _ => unreachable!("invalid input somehow"),
         };
 
-        segments.iter()
-            .map(|&orig_segs|
-            {
-                Self::handle_single(node.clone(), &mixed_cluster, orig_segs)
-            }).collect()
+        segments.iter().map(|&orig_segs|
+        {
+            Self::update_segment_maps(node.clone(), &mixed_cluster, orig_segs)
+        }).collect()
     }
 
-    fn handle_single(mut node: Display, mixed_cluster: &str, orig_segs: &str) -> Display
+    fn update_segment_maps(mut node: Display, mixed_cluster: &str, orig_segs: &str) -> Display
     {
         for c1 in mixed_cluster.chars()
         {
@@ -178,14 +187,4 @@ impl Display
     {
         self.segment_maps.iter().all(|s| !s.1.is_empty())
     }
-}
-
-fn parse(part: &str) -> Vec<String>
-{
-    part.split(' ').map(|s|
-    {
-        let mut v : Vec<_> = s.chars().collect();
-        v.sort();
-        v.into_iter().collect::<String>()
-    }).collect()
 }
