@@ -6,7 +6,7 @@ mod solutions;
 
 fn main()
 {
-    solve("07", solutions::day07::solution_b, false);
+    solve("08", solutions::day08::solution_b, false);
 }
 
 fn solve(day: &str, solution_func: fn(&str) -> String, test : bool)
