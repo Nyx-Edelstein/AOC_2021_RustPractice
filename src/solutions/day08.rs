@@ -84,10 +84,9 @@ impl Display
     fn solve(self) -> u32
     {
         let mut to_consider = vec![self; 1];
-        while !to_consider.is_empty()
+        while let Some(current) = to_consider.pop()
         {
-            let current = to_consider.pop().unwrap();
-            let next = Self::expand(current);
+            let next = current.expand();
             for node in next.into_iter()
             {
                 if node.is_solved()
@@ -99,15 +98,14 @@ impl Display
                     to_consider.push(node);
                 }                
             }
-
             to_consider.sort_by(|a, b| b.mixed_clusters.cmp(&a.mixed_clusters))  
         }
         unreachable!("did not find a solution (should not happen!)");
     }
 
-    fn expand(mut node: Display) -> Vec<Display>
+    fn expand(mut self) -> Vec<Display>
     {
-        let mixed_cluster = node.mixed_clusters.pop().unwrap_or_default();
+        let mixed_cluster = self.mixed_clusters.pop().unwrap_or_default();
         let segments : &[&str] = match mixed_cluster.len()
         {
             0 => &[], //empty
@@ -122,12 +120,14 @@ impl Display
 
         segments.iter().map(|&orig_segs|
         {
-            Self::update_segment_maps(node.clone(), &mixed_cluster, orig_segs)
+            self.update_segment_maps(&mixed_cluster, orig_segs)
         }).collect()
     }
 
-    fn update_segment_maps(mut node: Display, mixed_cluster: &str, orig_segs: &str) -> Display
+    fn update_segment_maps(&self, mixed_cluster: &str, orig_segs: &str) -> Display
     {
+        let mut node = self.clone();
+
         for c1 in mixed_cluster.chars()
         {
             let segment = node.segment_maps.get_mut(&c1).unwrap();
