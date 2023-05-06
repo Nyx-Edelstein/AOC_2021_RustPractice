@@ -95,12 +95,10 @@ pub fn solution_a(input: &str) -> String
 pub fn solution_b(input: &str) -> String
 {
     let mut grid = OctopusGrid::new(input);
-    let mut all_flashing = false;
     let mut i = 0;
-    while !all_flashing
+    while grid.octopi.values().any(|o| o.energy_level != 0)
     {
         (grid, _) = grid.step();
-        all_flashing = grid.octopi.values().all(|o| o.energy_level == 0);
         i += 1;
     }
     i.to_string()
