@@ -1,12 +1,16 @@
 use std::fs::File;
 use std::path::Path;
 use std::io::prelude::*;
+use stopwatch::{Stopwatch};
 
 mod solutions;
 
 fn main()
 {
-    solve("11", solutions::day11::solution_b, false);
+    let mut sw = Stopwatch::start_new();
+    solve("12", solutions::day12::solution_b, false);
+    sw.stop();
+    println!("elapsed ms: {:?}", sw.elapsed_ms())
 }
 
 fn solve(day: &str, solution_func: fn(&str) -> String, test : bool)
