@@ -112,5 +112,3 @@ impl Path
         new_path
     }
 }
-
-
