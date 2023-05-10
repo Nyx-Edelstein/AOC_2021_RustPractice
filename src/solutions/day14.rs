@@ -1,5 +1,4 @@
 use std::{collections::HashMap};
-
 use itertools::Itertools;
 
 #[derive(Debug)]
@@ -76,7 +75,7 @@ fn solve(input: &str, steps: u32) -> String
     let mut polymer = Polymer::new(input);
     for i in 0..steps { polymer = polymer.step(); }
 
-    let char_counts = polymer.state.iter().fold(HashMap::new(), |mut map, (pair, &count)|
+    let char_counts = polymer.state.into_iter().fold(HashMap::new(), |mut map, (pair, count)|
     {
         let char = pair.chars().next().unwrap();
         let char_count = map.get(&char).unwrap_or(&0) + count;
