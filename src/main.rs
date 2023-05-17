@@ -8,7 +8,7 @@ mod solutions;
 fn main()
 {
     let mut sw = Stopwatch::start_new();
-    solve("15", solutions::day15::solution_b, false);
+    solve("16", solutions::day16::solution_b, false);
     sw.stop();
     println!("elapsed ms: {:?}", sw.elapsed_ms())
 }
