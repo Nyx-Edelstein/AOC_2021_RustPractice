@@ -1,5 +1,3 @@
-use itertools::Itertools;
-
 pub fn solution_a(input: &str) -> String
 {
     let target_area = TargetArea::new(input);
@@ -10,13 +8,17 @@ pub fn solution_a(input: &str) -> String
 pub fn solution_b(input: &str) -> String
 {
     let target_area = TargetArea::new(input);
-    (1..=target_area.x_max).cartesian_product(target_area.y_min..=-target_area.y_min)
-        .filter(|(x, y)| target_area.check_solution(*x, *y))
-        .count()
-        .to_string()
+    let mut unique_solutions = 0;
+    for x_vel in 1..=target_area.x_max
+    {
+        for y_vel in target_area.y_min..=-target_area.y_min
+        {
+            if target_area.check_solution(x_vel, y_vel) { unique_solutions += 1}
+        }
+    }
+    unique_solutions.to_string()
 }
 
-#[derive(Debug)]
 struct TargetArea
 {
     x_min: i32,
