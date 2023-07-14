@@ -1,14 +1,14 @@
 use std::fs::File;
 use std::path::Path;
 use std::io::prelude::*;
-use stopwatch::{Stopwatch};
+use stopwatch::Stopwatch;
 
 mod solutions;
 
 fn main()
 {
     let mut sw = Stopwatch::start_new();
-    solve("24", solutions::day24::solution_a, false);
+    solve("25", solutions::day25::solution_a, false);
     sw.stop();
     println!("elapsed ms: {:?}", sw.elapsed_ms())
 }
